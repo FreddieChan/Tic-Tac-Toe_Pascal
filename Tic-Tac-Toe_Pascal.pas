@@ -1,8 +1,9 @@
 
 Var status : array[1..3,1..3] Of char;
     player : integer;//p0_p1
+    x, y : integer; //current position
 
-Function wincheck(status:Array): boolean;
+Function wincheck(status:Array OF CHAR) : boolean;
 Begin
   If (status[1,1] = status[1,2]) And (status[1,2]= status[1,3])
      Else If (status[2,1] = status[2,2]) And (status[2,2]= status[2,3])
@@ -15,6 +16,11 @@ Begin
     Then wincheck := true;
   Else
 End;
+
+procedure switchplayer(player);
+begin
+  if player = 0 then player :=1 else if player = 1 then player := 0;
+end;
 
 
 Procedure writeboard
@@ -30,7 +36,7 @@ Begin
 End;
 
 
-
+//MAIN
 Begin
   writeln('game');
   readln();
@@ -44,6 +50,7 @@ end;
   
 while wincheck= true Do
 begin 
+  writeln(player,'WINS');
 
 
 
