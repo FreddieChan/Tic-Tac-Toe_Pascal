@@ -2,7 +2,7 @@
 Var status :   array[1..3,1..3] Of char;
     player :   integer;
     //p0_p1
-    x, y :   integer;
+    x1, y1 :   integer;
     //current position
     f :   text;
     playno :   integer;
@@ -39,14 +39,14 @@ Begin
 End;
 
 Function switchplayer(player);
-Begin
+Begins
     If player = 0 Then player := 1
     key := 'X';
     Else If player = 1 Then player := 0;
     key := 'O';
 End;
 
-Procedure writeboard
+Procedure writeboard;
 Begin
     For i := 1 To 3 Do
         Begin
@@ -59,6 +59,7 @@ Begin
 End;
 
 Function select(x1,y1:integer) : array;
+//missing x1y1 initialization
 Begin
     Repeat
         If readkey = 'A' Then x1 := x1-1
@@ -83,7 +84,8 @@ Begin
             writeboard;
             select;
             gotoxy(select);
-            write(key);
+            if status(select) = '' then
+                write(key);
             wincheck;
             switchplayer;
         End;
@@ -93,6 +95,9 @@ Begin
             writeln(player,'WINS');
             writefile;
             readln;
+            clrscr;
+            wincheck:= false;
+
         End;
     readln;
 End.
