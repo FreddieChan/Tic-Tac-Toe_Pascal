@@ -6,7 +6,7 @@ Var status :   array[1..3,1..3] Of char;
     //current position
     f :   text;
     playno :   integer;
-    key : char;
+    key :   char;
 
 Procedure writefile(f:text);
 Begin
@@ -40,10 +40,10 @@ End;
 
 Function switchplayer(player);
 Begins
-    If player = 0 Then player := 1
-    key := 'X';
-    Else If player = 1 Then player := 0;
-    key := 'O';
+If player = 0 Then player := 1
+                             key := 'X';
+Else If player = 1 Then player := 0;
+key := 'O';
 End;
 
 Procedure writeboard;
@@ -58,7 +58,7 @@ Begin
         End;
 End;
 
-Function select(x1,y1:integer) : array;
+Function select(x1,y1:integer) :   array;
 //missing x1y1 initialization
 Begin
     Repeat
@@ -70,7 +70,7 @@ Begin
         Else
             If readkey = 'S' Then y1 := y1-1;
     Until readkey = #10
-    select:= [x1,y1];
+          select:= [x1,y1];
 
 End;
 
@@ -79,12 +79,12 @@ Begin
     writeln('THE TIC TAC TOE GAME');
     readln();
     wincheck := false;
-    While wincheck := false Do
+    While wincheck = false Do
         Begin
             writeboard;
             select;
             gotoxy(select);
-            if status(select) = '' then
+            If status(select) = '' Then
                 write(key);
             wincheck;
             switchplayer;
@@ -96,7 +96,7 @@ Begin
             writefile;
             readln;
             clrscr;
-            wincheck:= false;
+            wincheck := false;
 
         End;
     readln;
