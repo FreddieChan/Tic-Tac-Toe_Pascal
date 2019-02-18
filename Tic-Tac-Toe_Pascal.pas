@@ -21,6 +21,7 @@ Begin
     begin for j := 1 to 3 do
     writeln(status[i,j]);
     end;
+    close(f);
 
 End;
 
