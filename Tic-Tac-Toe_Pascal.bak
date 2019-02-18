@@ -1,4 +1,4 @@
-uses sysutils, crt;
+uses sysutils;
 
 Var status :   array[1..3,1..3] Of char;
     player :   integer;
@@ -9,9 +9,6 @@ Var status :   array[1..3,1..3] Of char;
     playno :   integer;
     key :   char;
 
-type
-a = array[1..3,1..3] of char;
-
 Procedure writefile(f:text);
 var i,j : integer;
 Begin
@@ -21,11 +18,11 @@ Begin
     begin for j := 1 to 3 do
     writeln(status[i,j]);
     end;
+    close(f);
 
 End;
 
-
-Function wincheck(status:a) :   boolean;
+Function wincheck(status:Array Of char) :   boolean;
 Begin
     If (status[1,1] = status[1,2]) And (status[1,2]= status[1,3]) Then
         wincheck := true
@@ -54,36 +51,30 @@ key := 'O'; end
 End;
 
 Procedure writeboard;
-var i,j : integer;
-
 Begin
     For i := 1 To 3 Do
         Begin
             For j := 1 To 3 Do
                 Begin
-                    Write('|',status[i,j],'|');
+                    Write('|',staus(i,j),'|')
                 End;
             writeln('_____________');
         End;
 End;
 
-Function select(x1,y1:integer): a ;
-var k : char;
-
-//missing x1y1 initialization,range
+Function select(x1,y1:integer): array[1..3,1..3] of char ;
+//missing x1y1 initialization
 Begin
     Repeat
-      k := ord(readkey);
-        //ord value #
-        If k = 'A' Then x1 := x1-1
+        If readkey = 'A' Then x1 := x1-1
         Else
-            If k = 'D' Then x1 := x1+1
+            If readkey = 'D' Then x1 := x1+1
         Else
-            If k = 'W' Then y1 := y1+1
+            If readkey = 'W' Then y1 := y1+1
         Else
             If readkey = 'S' Then y1 := y1-1;
-    Until readkey = #10;
-          select[1,1]:= [x1,y1] ;
+    Until readkey = #10
+          select:= [x1,y1];
 
 End;
 
