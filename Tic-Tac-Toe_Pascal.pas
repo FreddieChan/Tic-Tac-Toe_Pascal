@@ -6,7 +6,7 @@ Type
 
 Var status :   a;
     player :   integer;
-    x1, y1 :   integer;
+    x1, y1 :   integer; {1 to 3 which indicate the box}
     f :   text;
     playno :   integer;
     key :   char;
@@ -55,10 +55,15 @@ Procedure resetgame;
 Var i, j :   integer; k:   char;
 Begin
     clrscr;
+    x1 := 1;
+    y1 := 1;
+    key := 'O';
+    player := 0;
+    playno := 0;
     wincheck := false;
     For i := 1 To 3 Do
         For j := 1 To 3 Do
-            status[i,j] := Chr(Ord('a') + (i - 1) * 3 + j - 1);
+            status[i,j] := Chr(Ord('a') + (j - 1) * 3 + i - 1);
 End;
 
 
@@ -84,26 +89,33 @@ Procedure writeboard;
 Var i,j :   integer;
 
 Begin
+    ClrScr();
+    writeln('THE TIC TAC TOE GAME');
     writeln('_____________');
     For i := 1 To 3 Do
         Begin
             For j := 1 To 3 Do
             Begin
-                Write('|',status[i,j]);
+                Write('|',status[j, i]);
             End;
             WriteLn('|');
             writeln('_____________');
         End;
 End;
 
-Function select(x1,y1:integer):   a ;
-
-Var k :   integer;
+Procedure select;
+Var k : integer;
 Begin
     Repeat
         k := ord(readkey);
         //ord value #
-        While ((x1>1) And (x1<3)) And ((y1>1) And (y1<3)) Do
+        Write(k);
+        If (k = 97) And (x1 <> 1) Then
+            x1 := x1 - 1;
+        If (k = 100) And (x1 <> 3) Then
+            x1 := x1 + 1;
+            {
+        If ((x1>1) And (x1<3)) And ((y1>1) And (y1<3)) Then
             Begin
                 If k = 97 Then x1 := x1-1
                 Else
@@ -112,9 +124,14 @@ Begin
                     If k = 119 Then y1 := y1+1
                 Else
                     If k = 115 Then y1 := y1-1;
-            End
-    Until k = 13;
-    status[x1,y1] := 'O';
+            End;
+            }
+        If k = 0 Then
+            ReadKey();
+        writeboard();
+        { Gotoxy(x1, y1) }
+    Until (k = 13) And (True); { Check if the box is not occupied }
+    status[x1, y1] := key;
 End;
 
 //MAIN
@@ -122,18 +139,18 @@ Begin
     writeln('THE TIC TAC TOE GAME');
     readln();
     wincheck := false;
-    x1 := 1;
-    y1 := 1;
     resetgame;
-    While wincheck = false Do
+    writeboard;
+    While (wincheck = false) And (playno < 9) Do
         Begin
+            select;
             writeboard;
-            If (status[x1, y1] <> 'O') And (status[x1, y1] <> 'X') Then
-                write(key, status[x1, y1]);
-            winning;
+            wincheck := winning;
             switchplayer;
-            ReadLn();
+            playno := playno + 1;
         End;
+    WriteLn('abc');
+    ReadLn();
 
     If wincheck Then
         Begin
