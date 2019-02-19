@@ -1,36 +1,36 @@
 
 Uses sysutils, crt;
 
-Var status :   array[1..3,1..3] Of char;
+Type 
+    a =   array[1..3,1..3] Of char;
+
+Var status :   a;
     player :   integer;
     x1, y1 :   integer;
     f :   text;
     playno :   integer;
     key :   char;
     wincheck:   boolean;
-    selected :array[1..3,1..3] Of char;
 
-Type 
-    a =   array[1..3,1..3] Of char;
-
-Procedure winning;
+Function winning: Boolean;
 Begin
+    winning := false;
     If (status[1,1] = status[1,2]) And (status[1,2]= status[1,3]) Then
-        wincheck := true
+        winning := true
     Else If (status[2,1] = status[2,2]) And (status[2,2]= status[2,3]) Then
-             wincheck := true
+        winning := true
     Else If (status[3,1] = status[3,2]) And (status[3,2]= status[3,3]) Then
-             wincheck := true
+        winning := true
     Else If (status[1,1] = status[2,1]) And (status[2,1]= status[3,1])Then
-             wincheck := true
+        winning := true
     Else If (status[1,2] = status[2,2]) And (status[2,2]= status[3,2])Then
-             wincheck := true
+        winning := true
     Else If (status[1,3] = status[2,3]) And (status[2,3]= status[3,3])Then
-             wincheck := true
+        winning := true
     Else If (status[1,1] = status[2,2]) And (status[2,2]= status[3,3])Then
-             wincheck := true
-    Else If (status[3,1] = status[2,2]) And (status[2,2]= status[1,3])
-             Then wincheck := true;
+        winning := true
+    Else If (status[3,1] = status[2,2]) And (status[2,2]= status[1,3]) Then
+        winning := true;
 End;
 
 
@@ -57,19 +57,13 @@ Begin
     clrscr;
     wincheck := false;
     For i := 1 To 3 Do
-        Begin
-            For j := 1 To 3 Do
-                Begin
-                    For k := 'a' To 'j' Do
-                        status[i,j] := k;
-                End;
-        End;
-
+        For j := 1 To 3 Do
+            status[i,j] := Chr(Ord('a') + (i - 1) * 3 + j - 1);
 End;
 
 
 
-Procedure switchplayer(player:integer);
+Procedure switchplayer();
 Begin
     If player = 0 Then
         Begin
@@ -77,10 +71,10 @@ Begin
             key := 'X';
         End
     Else If player = 1 Then
-             Begin
-                 player := 0;
-                 key := 'O';
-             End
+        Begin
+            player := 0;
+            key := 'O';
+        End
 End;
 
 
@@ -90,12 +84,14 @@ Procedure writeboard;
 Var i,j :   integer;
 
 Begin
+    writeln('_____________');
     For i := 1 To 3 Do
         Begin
             For j := 1 To 3 Do
-                Begin
-                    Write('|',status[i,j],'|');
-                End;
+            Begin
+                Write('|',status[i,j]);
+            End;
+            WriteLn('|');
             writeln('_____________');
         End;
 End;
@@ -118,8 +114,7 @@ Begin
                     If k = 115 Then y1 := y1-1;
             End
     Until k = 13;
-    selected := [x1,y1];
-
+    status[x1,y1] := 'O';
 End;
 
 //MAIN
@@ -127,30 +122,29 @@ Begin
     writeln('THE TIC TAC TOE GAME');
     readln();
     wincheck := false;
+    x1 := 1;
+    y1 := 1;
+    resetgame;
     While wincheck = false Do
         Begin
             writeboard;
-            selected;
-            gotoxy(selected);
-
-            If status(selected) = '' Then
-                write(key,status(selected));
+            If (status[x1, y1] <> 'O') And (status[x1, y1] <> 'X') Then
+                write(key, status[x1, y1]);
             winning;
             switchplayer;
+            ReadLn();
         End;
 
-    While wincheck Do
+    If wincheck Then
         Begin
             writeln(player,'WINS');
             writefile;
             readln;
             clrscr;
             wincheck := false;
-
         End;
 
-    While movecnt = 9 Do
+    If playno = 9 Then
         writeln('TIE');
-
     readln;
 End.
