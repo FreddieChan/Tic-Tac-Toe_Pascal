@@ -114,6 +114,11 @@ Begin
             x1 := x1 - 1;
         If (k = 100) And (x1 <> 3) Then
             x1 := x1 + 1;
+        If (k = 100) And (x1 <> 3) Then
+            y1 := y1 - 1;
+        If (k = 100) And (x1 <> 3) Then
+            y1 := y1 + 1;
+
             {
         If ((x1>1) And (x1<3)) And ((y1>1) And (y1<3)) Then
             Begin
