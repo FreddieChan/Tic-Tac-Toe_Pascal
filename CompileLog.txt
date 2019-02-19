@@ -1,9 +1,4 @@
 Target OS: Win32 for i386
 Compiling c:\users\s141071\documents\github\tic-tac-toe_pascal\tic-tac-toe_pascal.pas
-tic-tac-toe_pascal.pas(77,12) Error: Incompatible types: got "BYTE" expected "CHAR"
-tic-tac-toe_pascal.pas(87,20) Error: Incompatible types: got "Set Of BYTE" expected "A"
-tic-tac-toe_pascal.pas(95,14) Error: Wrong amount of parameters specified
-tic-tac-toe_pascal.pas(96,20) Error: Wrong amount of parameters specified
-tic-tac-toe_pascal.pas(99,19) Error: Wrong amount of parameters specified
-tic-tac-toe_pascal.pas(100,26) Error: Wrong amount of parameters specified
-tic-tac-toe_pascal.pas(101,22) Fatal: Syntax error, THEN expected but ( found
+tic-tac-toe_pascal.pas(56,18) Error: Wrong amount of parameters specified
+tic-tac-toe_pascal.pas(57,9) Fatal: Syntax error, ; expected but FOR found
