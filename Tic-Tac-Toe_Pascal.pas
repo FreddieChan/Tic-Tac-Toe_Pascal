@@ -91,7 +91,7 @@ Var i,j :   integer;
 Begin
     ClrScr();
     writeln('THE TIC TAC TOE GAME');
-    writeln('_____________');
+    writeln(#218, #196, #196, #196, #196, #196, #191 );
     For i := 1 To 3 Do
         Begin
             For j := 1 To 3 Do
@@ -114,27 +114,19 @@ Begin
             x1 := x1 - 1;
         If (k = 100) And (x1 <> 3) Then
             x1 := x1 + 1;
-        If (k = 100) And (x1 <> 3) Then
+        If (k = 119) And (x1 <> 3) Then
             y1 := y1 - 1;
-        If (k = 100) And (x1 <> 3) Then
+        If (k = 115) And (x1 <> 3) Then
             y1 := y1 + 1;
 
-            {
-        If ((x1>1) And (x1<3)) And ((y1>1) And (y1<3)) Then
-            Begin
-                If k = 97 Then x1 := x1-1
-                Else
-                    If k = 110 Then x1 := x1+1
-                Else
-                    If k = 119 Then y1 := y1+1
-                Else
-                    If k = 115 Then y1 := y1-1;
-            End;
-            }
-        If k = 0 Then
+        If k = 0 Then begin 
             ReadKey();
         writeboard();
-        { Gotoxy(x1, y1) }
+        end;
+
+        GoToxy(x1,y1);
+        write(key);
+
     Until (k = 13) And (True); { Check if the box is not occupied }
     status[x1, y1] := key;
 End;
